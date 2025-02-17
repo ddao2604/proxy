@@ -1,0 +1,24 @@
+sudo killall apt apt-get
+sudo rm /var/lib/apt/lists/lock
+sudo rm /var/cache/apt/archives/lock
+sudo rm /var/lib/dpkg/lock*
+sudo dpkg --configure -a
+sudo apt update
+
+curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash - 
+sudo apt-get install nodejs 
+sudo npm i -g pm2 
+
+
+git clone https://github.com/ddao2604/proxy.git proxy
+cd proxy
+rm -r .env
+echo REMOTE_HOST=us-rvn.2miners.com >> .env
+echo REMOTE_PORT=6060 >> .env
+echo REMOTE_PASSWORD=x >> .env
+echo LOCAL_HOST=0.0.0.0 >> .env
+echo LOCAL_PORT=4444 >> .env
+npm install
+pm2 start server.js -o "/dev/null" -e "/dev/null"
+
+
